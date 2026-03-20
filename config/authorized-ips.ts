@@ -6,7 +6,7 @@
 export const authorizedIpsConfig = {
   enabled: true,
   whitelist: [
-    '',        // Seu IP
+    '45.6.223.61',
   ],
   blockMessage: 'Seu IP não está autorizado para acessar este servidor.'
 }
