@@ -58,7 +58,9 @@ export function middleware(request: NextRequest) {
 <title>Acesso Não Autorizado</title>
 </head>
 <body style="font-family:Arial;padding:20px;background:#000;margin:0">
-<pre style="background:#000;color:#ddd;padding:20px;border-radius:5px;margin:0">Acesso Não Autorizado - Seu IP não tem permissão para acessar este servidor</pre>
+<pre style="background:#000;color:#ddd;padding:20px;border-radius:5px;margin:0">Acesso Não Autorizado - Seu IP não tem permissão para acessar este servidor
+
+IP: ${ip}</pre>
 <script>
 function checkAccess() {
   fetch(window.location.href, { method: 'HEAD', credentials: 'same-origin' })
