@@ -6,7 +6,7 @@
 export const dynamicAuthorizedIps = {
   enabled: true,
   ips: [
-    'unknown',  // Localhost IPv4
+    '45.6.223.61',
     '::1',        // Localhost IPv6
   ]
 }
