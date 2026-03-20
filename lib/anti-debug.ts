@@ -329,7 +329,7 @@ class AntiDebugProtection {
       mutations.forEach((mutation) => {
         mutation.addedNodes.forEach((node) => {
           if (node.nodeName === 'SCRIPT') {
-            node.remove()
+            (node as Element).remove()
             this.triggerProtection()
           }
         })

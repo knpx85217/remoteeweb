@@ -91,18 +91,23 @@ class CommandQueue {
   cleanup(): number {
     const now = Date.now();
     let removed = 0;
+    const toDelete: string[] = [];
 
-    for (const [id, command] of this.commands.entries()) {
+    this.commands.forEach((command, id) => {
       // Remove completed/failed commands older than MAX_AGE
       if ((command.status === 'completed' || command.status === 'failed') &&
           now - command.timestamp > this.MAX_AGE) {
-        this.commands.delete(id);
-        // Remove from queue array
-        const idx = this.commandQueue.indexOf(id);
-        if (idx >= 0) this.commandQueue.splice(idx, 1);
+        toDelete.push(id);
         removed++;
       }
-    }
+    });
+
+    // Delete marked commands
+    toDelete.forEach(id => {
+      this.commands.delete(id);
+      const idx = this.commandQueue.indexOf(id);
+      if (idx >= 0) this.commandQueue.splice(idx, 1);
+    });
 
     if (removed > 0) {
       console.log('[CommandQueue] Cleanup removed:', removed, 'old commands');

@@ -13,14 +13,14 @@ export function AntiDebugProvider({ children }: { children: React.ReactNode }) {
       // Additional subtle protections
       const setupSubtleProtection = () => {
         // Hide React DevTools hook
-        if (window.__REACT_DEVTOOLS_GLOBAL_HOOK__) {
-          window.__REACT_DEVTOOLS_GLOBAL_HOOK__ = {
+        if ((window as any).__REACT_DEVTOOLS_GLOBAL_HOOK__) {
+          (window as any).__REACT_DEVTOOLS_GLOBAL_HOOK__ = {
             isDisabled: true,
             supportsFiber: true,
             inject: () => {},
             onCommitFiberRoot: () => {},
             onCommitFiberUnmount: () => {},
-          } as any
+          }
         }
 
         // Override performance.mark to hide performance markers

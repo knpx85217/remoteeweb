@@ -29,9 +29,9 @@ export class ServerProtection {
           return { valid: false, error: 'Missing CSRF token' }
         }
         
-        const csrfValidation = SecurityManager.validateCSRFToken(csrfToken, validation.userId)
+        const csrfValidation = SecurityManager.validateCSRFToken(csrfToken, validation.sessionId || '')
         
-        if (!csrfValidation.valid) {
+        if (!csrfValidation) {
           return { valid: false, error: 'Invalid CSRF token' }
         }
       }
@@ -54,7 +54,7 @@ export class ServerProtection {
         }
       }
       
-      return { valid: true, userId: validation.userId }
+      return { valid: true, userId: validation.discordId }
       
     } catch (error) {
       return { valid: false, error: 'Validation error' }
@@ -103,7 +103,7 @@ export class ServerProtection {
   
   // Log suspicious activity
   static logSuspiciousActivity(request: NextRequest, reason: string) {
-    const ip = request.ip || request.headers.get('x-forwarded-for') || 'unknown'
+    const ip = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown'
     const userAgent = request.headers.get('user-agent') || 'unknown'
     const timestamp = new Date().toISOString()
     
